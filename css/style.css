@@ -1,0 +1,525 @@
+body {
+    font-family: "Hiragino Kaku Gothic ProN", "Meiryo", sans-serif;
+    background: #222;
+    color: #f5f5f5;
+    max-width: 540px;
+    margin: 20px auto;
+    padding: 15px;
+    text-align: center;
+  }
+  
+  /* ステータス＆図鑑ボタンバー */
+  .status-bar {
+    background: #333;
+    border: 2px solid #000;
+    border-radius: 8px;
+    padding: 8px 12px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.85em;
+    gap: 8px;
+  }
+  
+  .next-unlock {
+    color: #ffd166;
+    font-weight: bold;
+  }
+  
+  .dex-open-btn {
+    background: #4cc9f0;
+    color: #000;
+    border: 2px solid #000;
+    border-radius: 6px;
+    padding: 5px 12px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 2px 2px 0px #000;
+    font-size: 0.9em;
+  }
+  
+  .dex-open-btn:active {
+    transform: translate(2px, 2px);
+    box-shadow: none;
+  }
+  
+  /* 3モード切り替えスイッチ */
+  .mode-switch-box {
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+    margin-bottom: 12px;
+  }
+  
+  .mode-btn {
+    flex: 1;
+    padding: 8px 6px;
+    border: 2.5px solid #000;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 0.85em;
+    cursor: pointer;
+    background: #444;
+    color: #ccc;
+    box-shadow: 3px 3px 0px #000;
+    transition: 0.15s;
+    line-height: 1.3;
+  }
+  
+  .mode-btn.active-affirm {
+    background: #ffd166;
+    color: #000;
+  }
+  
+  .mode-btn.active-empathy {
+    background: #ffafcc;
+    color: #000;
+  }
+  
+  .mode-btn.active-cheer {
+    background: #ff7b54;
+    color: #000;
+  }
+  
+  .mode-btn:active {
+    transform: translate(2px, 2px);
+    box-shadow: none;
+  }
+  
+  .selector-box {
+    margin-bottom: 12px;
+  }
+  
+  select {
+    padding: 8px 12px;
+    font-size: 1em;
+    border-radius: 6px;
+    background: #3d3d3d;
+    color: #fff;
+    border: 2px solid #000;
+    font-weight: bold;
+  }
+  
+  /* 解放通知バナー */
+  .unlock-banner {
+    display: none;
+    background: #ff4d6d;
+    color: #fff;
+    border: 3px solid #000;
+    box-shadow: 4px 4px 0px #000;
+    padding: 10px;
+    border-radius: 8px;
+    font-weight: bold;
+    margin-bottom: 12px;
+    animation: pop 0.4s ease;
+  }
+  
+  @keyframes pop {
+    0% { transform: scale(0.8); }
+    70% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+  }
+  
+  /* 漫画のコマ風メインステージ */
+  .manga-panel {
+    background: #fff;
+    color: #111;
+    border: 4px solid #000;
+    border-radius: 8px;
+    padding: 18px 15px 18px;
+    margin-bottom: 15px;
+    box-shadow: 6px 6px 0px #000;
+    position: relative;
+  }
+  
+  /* 現在のモード表示バッジ */
+  .current-mode-badge {
+    display: inline-block;
+    font-size: 0.78em;
+    font-weight: bold;
+    padding: 3px 12px;
+    border: 2px solid #000;
+    border-radius: 12px;
+    margin-bottom: 10px;
+    background: #ffd166;
+    color: #000;
+  }
+  
+  /* メインの漫画風吹き出し（RPG風テキスト送り対応） */
+  .manga-bubble {
+    position: relative;
+    background: #fff;
+    border: 3px solid #000;
+    border-radius: 24px;
+    padding: 16px 20px;
+    font-size: 1.05em;
+    font-weight: bold;
+    line-height: 1.55;
+    color: #000;
+    margin-bottom: 22px;
+    min-height: 3.6em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 3px 3px 0px rgba(0, 0, 0, 0.15);
+    cursor: pointer;
+    user-select: none;
+  }
+  
+  .manga-bubble::before {
+    content: "";
+    position: absolute;
+    bottom: -18px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: 18px 12px 0;
+    border-style: solid;
+    border-color: #000 transparent transparent;
+  }
+  
+  .manga-bubble::after {
+    content: "";
+    position: absolute;
+    bottom: -13px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: 14px 9px 0;
+    border-style: solid;
+    border-color: #fff transparent transparent;
+  }
+  
+  /* RPG風の右下三角カーソル */
+  .rpg-cursor {
+    position: absolute;
+    bottom: 7px;
+    right: 16px;
+    font-size: 0.75em;
+    color: #000;
+    animation: blinkCursor 0.7s infinite;
+    display: none;
+  }
+  
+  @keyframes blinkCursor {
+    0%, 100% { opacity: 1; transform: translateY(0); }
+    50% { opacity: 0.2; transform: translateY(2px); }
+  }
+  
+  /* 考え中ドットのアニメーション */
+  .thinking-dots {
+    color: #666;
+    letter-spacing: 3px;
+  }
+  
+  /* 石膏像の写真エリア（固定大判フレーム） */
+  .statue-img-wrap {
+    width: 260px;
+    height: 260px;
+    margin: 0 auto 12px;
+    border-radius: 14px;
+    border: 3.5px solid #000;
+    overflow: hidden;
+    background: #e9ecef;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 4px 4px 0px #000;
+  }
+  
+  .statue-img-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .statue-name-tag {
+    display: inline-block;
+    background: #000;
+    color: #fff;
+    padding: 5px 16px;
+    font-weight: bold;
+    font-size: 0.98em;
+    border-radius: 4px;
+  }
+  
+  /* チャット履歴（漫画のページ風コンテナ） */
+  .chat-log {
+    background: #f4f4f4;
+    background-image: radial-gradient(#ccc 1px, transparent 1px);
+    background-size: 12px 12px;
+    height: 195px;
+    overflow-y: auto;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 12px;
+    border: 4px solid #000;
+    box-shadow: 6px 6px 0px #000;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  
+  .msg-row {
+    display: flex;
+    flex-direction: column;
+    max-width: 80%;
+  }
+  
+  .msg-row.statue {
+    align-self: flex-start;
+    align-items: flex-start;
+  }
+  
+  .msg-row.user {
+    align-self: flex-end;
+    align-items: flex-end;
+  }
+  
+  .msg-sender {
+    font-size: 0.75em;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 3px;
+    padding: 0 4px;
+  }
+  
+  .log-bubble {
+    position: relative;
+    padding: 10px 14px;
+    border: 2.5px solid #000;
+    border-radius: 16px;
+    font-size: 0.92em;
+    font-weight: bold;
+    line-height: 1.45;
+    color: #000;
+    text-align: left;
+    word-break: break-word;
+    box-shadow: 2px 2px 0px #000;
+  }
+  
+  .msg-row.statue .log-bubble {
+    background: #fff;
+    margin-left: 8px;
+  }
+  
+  .msg-row.statue .log-bubble::before {
+    content: "";
+    position: absolute;
+    top: 10px;
+    left: -11px;
+    border-width: 6px 11px 6px 0;
+    border-style: solid;
+    border-color: transparent #000 transparent transparent;
+  }
+  
+  .msg-row.statue .log-bubble::after {
+    content: "";
+    position: absolute;
+    top: 11px;
+    left: -7px;
+    border-width: 5px 9px 5px 0;
+    border-style: solid;
+    border-color: transparent #fff transparent transparent;
+  }
+  
+  .msg-row.user .log-bubble {
+    background: #ffe066;
+    margin-right: 8px;
+  }
+  
+  .msg-row.user .log-bubble::before {
+    content: "";
+    position: absolute;
+    top: 10px;
+    right: -11px;
+    border-width: 6px 0 6px 11px;
+    border-style: solid;
+    border-color: transparent transparent transparent #000;
+  }
+  
+  .msg-row.user .log-bubble::after {
+    content: "";
+    position: absolute;
+    top: 11px;
+    right: -7px;
+    border-width: 5px 0 5px 9px;
+    border-style: solid;
+    border-color: transparent transparent transparent #ffe066;
+  }
+  
+  /* ワンタップ会話ボタン群 */
+  .quick-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    justify-content: center;
+    margin-bottom: 10px;
+  }
+  
+  .quick-btn {
+    background: #fff;
+    color: #111;
+    border: 2px solid #000;
+    border-radius: 20px;
+    padding: 6px 14px;
+    font-size: 0.85em;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 2px 2px 0px #000;
+    transition: 0.1s;
+  }
+  
+  .quick-btn:hover {
+    background: #ffe066;
+  }
+  
+  .quick-btn:active {
+    transform: translate(2px, 2px);
+    box-shadow: none;
+  }
+  
+  /* テキスト入力欄 */
+  .input-area {
+    display: flex;
+    gap: 8px;
+  }
+  
+  input[type="text"] {
+    flex: 1;
+    padding: 10px;
+    border-radius: 6px;
+    border: 2px solid #000;
+    font-size: 1em;
+  }
+  
+  .send-btn {
+    padding: 10px 18px;
+    border-radius: 6px;
+    border: 2px solid #000;
+    background: #ffd166;
+    color: #111;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 2px 2px 0px #000;
+  }
+  
+  .send-btn:active {
+    transform: translate(2px, 2px);
+    box-shadow: none;
+  }
+  
+  .clear-btn {
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    color: #aaa;
+    font-size: 0.8em;
+    text-decoration: underline;
+    margin-top: 10px;
+    cursor: pointer;
+  }
+  
+  /* 石膏像図鑑モーダル */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.75);
+    z-index: 100;
+    align-items: center;
+    justify-content: center;
+    padding: 15px;
+  }
+  
+  .modal-content {
+    background: #fff;
+    color: #111;
+    border: 4px solid #000;
+    border-radius: 12px;
+    box-shadow: 8px 8px 0px #000;
+    max-width: 480px;
+    width: 100%;
+    max-height: 85vh;
+    overflow-y: auto;
+    padding: 20px;
+    text-align: left;
+  }
+  
+  .modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 3px solid #000;
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+  }
+  
+  .modal-header h2 {
+    margin: 0;
+    font-size: 1.2em;
+  }
+  
+  .close-modal-btn {
+    background: #ff4d6d;
+    color: #fff;
+    border: 2px solid #000;
+    border-radius: 6px;
+    padding: 4px 10px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 2px 2px 0px #000;
+  }
+  
+  .dex-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  .dex-card {
+    border: 3px solid #000;
+    border-radius: 8px;
+    padding: 12px;
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    box-shadow: 3px 3px 0px #000;
+  }
+  
+  .dex-card.locked {
+    background: #e9ecef;
+    color: #666;
+  }
+  
+  .dex-thumb {
+    width: 72px;
+    height: 72px;
+    border-radius: 8px;
+    border: 2px solid #000;
+    object-fit: cover;
+    flex-shrink: 0;
+    background: #ccc;
+  }
+  
+  .dex-info h3 {
+    margin: 0 0 4px;
+    font-size: 1em;
+  }
+  
+  .dex-info p {
+    margin: 0;
+    font-size: 0.82em;
+    line-height: 1.4;
+  }
+  
+  .dex-select-btn {
+    margin-top: 6px;
+    background: #ffd166;
+    border: 2px solid #000;
+    border-radius: 4px;
+    padding: 3px 10px;
+    font-size: 0.8em;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  

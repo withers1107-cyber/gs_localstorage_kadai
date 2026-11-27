@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>しゃべる石膏像の部屋</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+  <!-- ステータス＆図鑑ボタンバー -->
+  <div class="status-bar">
+    <span>会話数: <b id="talk-count">0</b>回</span>
+    <span class="next-unlock" id="next-unlock-text">次の解放まであと3回！</span>
+    <button class="dex-open-btn" onclick="openDex()">石膏像図鑑</button>
+  </div>
+
+  <!-- 3モード切り替えボタン -->
+  <div class="mode-switch-box">
+    <button class="mode-btn active-affirm" id="btn-affirm" onclick="setMode('affirm')">
+      肯定モード<br><small>（褒める）</small>
+    </button>
+    <button class="mode-btn" id="btn-empathy" onclick="setMode('empathy')">
+      共感モード<br><small>（寄り添い）</small>
+    </button>
+    <button class="mode-btn" id="btn-cheer" onclick="setMode('cheer')">
+      応援モード<br><small>（鼓舞する）</small>
+    </button>
+  </div>
+
+  <!-- 新キャラ解放時にポップアップする通知 -->
+  <div class="unlock-banner" id="unlock-banner"></div>
+
+  <div class="selector-box">
+    <label for="statue-select">石膏像を選ぶ：</label>
+    <select id="statue-select" onchange="changeStatue()"></select>
+  </div>
+
+  <!-- 漫画のコマ風メインエリア -->
+  <div class="manga-panel" id="manga-panel">
+    <div class="current-mode-badge" id="mode-badge">肯定モード中</div>
+
+    <!-- RPG風の吹き出し（クリックで文字送りスキップ可） -->
+    <div class="manga-bubble" id="statue-speech-box" onclick="finishTypingImmediately()" title="クリックで全文表示">
+      <span id="statue-speech">さあ、今日も全力で突き進もうじゃないか！</span>
+      <span class="rpg-cursor" id="rpg-cursor">▼</span>
+    </div>
+
+    <div class="statue-img-wrap">
+      <img id="statue-img" src="images/brutus.jpg" alt="石膏像の写真">
+    </div>
+
+    <div class="statue-name-tag" id="statue-name">ブルータス（熱血）</div>
+  </div>
+
+  <!-- 漫画の吹き出しチャット履歴 -->
+  <div class="chat-log" id="chat-log"></div>
+
+  <!-- ワンタップ会話ボタン -->
+  <div class="quick-buttons">
+    <button class="quick-btn" onclick="quickTalk('疲れた〜')">疲れた〜</button>
+    <button class="quick-btn" onclick="quickTalk('褒めて！')">褒めて！</button>
+    <button class="quick-btn" onclick="quickTalk('やる気出ない…')">やる気出ない…</button>
+    <button class="quick-btn" onclick="quickTalk('難しいよ〜')">難しいよ〜</button>
+    <button class="quick-btn" onclick="quickTalk('励まして！')">励まして！</button>
+  </div>
+
+  <div class="input-area">
+    <input type="text" id="user-input" placeholder="自由に話しかけることもできます..." onkeypress="if(event.key==='Enter') talk()">
+    <button class="send-btn" onclick="talk()">送信</button>
+  </div>
+  <button class="clear-btn" onclick="clearLogs()">履歴と解放状況をリセット</button>
+
+  <!-- 石膏像図鑑モーダル -->
+  <div class="modal-overlay" id="dex-modal" onclick="if(event.target===this) closeDex()">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>石膏像コレクション図鑑</h2>
+        <button class="close-modal-btn" onclick="closeDex()">閉じる</button>
+      </div>
+      <div class="dex-grid" id="dex-grid"></div>
+    </div>
+  </div>
+
+  <script src="/js/main.js"></script>
+</body>
+</html>

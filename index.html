@@ -7,12 +7,14 @@
   <link rel="stylesheet" href="./css/style.css">
 </head>
 <body>
-
   <!-- ステータス＆図鑑ボタンバー -->
   <div class="status-bar">
     <span>会話数: <b id="talk-count">0</b>回</span>
     <span class="next-unlock" id="next-unlock-text">次の解放まであと3回！</span>
-    <button class="dex-open-btn" onclick="openDex()">石膏像図鑑</button>
+    <div style="display: flex; gap: 6px;">
+      <button class="sound-toggle-btn" id="sound-toggle-btn" onclick="toggleSound()">音声: ON</button>
+      <button class="dex-open-btn" onclick="openDex()">石膏像図鑑</button>
+    </div>
   </div>
 
   <!-- 3モード切り替えボタン -->
@@ -71,7 +73,7 @@
   </div>
   <button class="clear-btn" onclick="clearLogs()">履歴と解放状況をリセット</button>
 
-  
+
   <!-- 石膏像図鑑モーダル -->
   <div class="modal-overlay" id="dex-modal" onclick="if(event.target===this) closeDex()">
     <div class="modal-content">
